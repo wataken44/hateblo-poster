@@ -36,8 +36,8 @@ atompub_template = """<?xml version="1.0" encoding="utf-8"?>
 <entry xmlns="http://www.w3.org/2005/Atom"
        xmlns:app="http://www.w3.org/2007/app">
   <title>{title}</title>
-  <author><name>{name}</name></author>
-  <content type="text/plain">{content}</content>
+  <author><name><![CDATA[{name}]]></name></author>
+  <content type="text/x-hatena-syntax"><![CDATA[{content}]]></content>
   <updated></updated>
   <app:control>
     <app:draft>{draft}</app:draft>
@@ -112,6 +112,9 @@ def create_wsse(username, password):
     return 'UsernameToken Username="{0}", PasswordDigest="{1}", Nonce="{2}", Created="{3}"'.format(username, digest, base64.b64encode(nonce), created)
 
 def post(title, body):
+    """X-WSSEで記事を投稿する
+ 
+    """
     global config
     user = str(config["user"])
     api_key = str(config["api_key"])
